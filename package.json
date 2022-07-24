@@ -1,0 +1,19 @@
+{
+  "name": "team-profile-generator",
+  "version": "1.0.0",
+  "description": "node.js app to generate team profiles",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aleenaalexia/Team-Profile-Generator.git"
+  },
+  "author": "Aleena Johns",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aleenaalexia/Team-Profile-Generator/issues"
+  },
+  "homepage": "https://github.com/aleenaalexia/Team-Profile-Generator#readme"
+}

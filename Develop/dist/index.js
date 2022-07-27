@@ -4,14 +4,26 @@ const Engineer = require('../lib/Engineer');
 const Intern = require('../lib/Intern');
 const fs = require('fs');
 const path = require('path');
-const { restoreDefaultPrompts } = require('inquirer');
 const OUTPUT = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT, "homepage.html");
 const teamMembs = [];
-const siteGen = require('../siteGen');
+const sitegen = require('../siteGen');
 
-const promptManager = () => {
-    return inquirer.prompt([
+
+// utilizing function from siteGen.js file 
+const siteGen = sitegen.siteGen(teamMembs);
+
+// Creates and writes code to new html file
+const teamGen = () => {
+    if(!fs.existsSync(OUTPUT)) {
+        fs.mkdirSync(OUTPUT)
+    }
+    fs.writeFileSync(outputPath, sitegen.siteGen(teamMembs), 'utf-8');
+}
+
+// prompt questions for 'Manager'
+const promptManager = async () => {
+    const answers = await inquirer.prompt([
         {
             type: 'input',
             name: 'name',
@@ -29,14 +41,14 @@ const promptManager = () => {
             name: 'office number',
             message: 'Please enter office phone number:',
         },
-    ]).then(answers => {
-        console.log(answers);
-        const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
-        teamMembs.push(manager);
-        prompts ();
-    })
+    ]);
+    console.log(answers);
+    const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+    teamMembs.push(manager);
+    prompts();
 };
 
+// Prompts listed after each new emplpyee is added
 const prompts = () => {
     return inquirer.prompt([
         {
@@ -56,6 +68,7 @@ const prompts = () => {
         });
 }
 
+// 'Engineer' prompts
 const promptEngineer = () => {
     return inquirer.prompt([
         {
@@ -83,6 +96,7 @@ const promptEngineer = () => {
     })
 };
 
+// 'Intern' Prompts
 const promptIntern = () => {
     return inquirer.prompt([
         {
@@ -110,11 +124,6 @@ const promptIntern = () => {
     })
 };
 
-const teamGen = () => {
-    if(!fs.existsSync(OUTPUT)) {
-        fs.mkdirSync(OUTPUT)
-    }
-    fs.writeFileSync(outputPath, siteGen(teamMembs), 'utf-8');
-}
+
 
 promptManager();

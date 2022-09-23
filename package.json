@@ -4,7 +4,8 @@
   "description": "node.js app to generate team profiles",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
